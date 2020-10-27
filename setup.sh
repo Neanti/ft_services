@@ -11,7 +11,9 @@ docker build --tag mysql ./srcs/mysql
 docker build --tag nginx ./srcs/nginx
 docker build --tag pma ./srcs/pma
 docker build --tag wp ./srcs/wordpress
+docker build --tag telegraf ./srcs/telegraf
 
+kubectl apply -f ./srcs/d_telegraf.yaml
 kubectl apply -f ./srcs/d_ftps.yaml
 kubectl apply -f ./srcs/d_grafana.yaml
 kubectl apply -f ./srcs/d_influxdb.yaml
