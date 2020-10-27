@@ -13,13 +13,13 @@ docker build --tag pma ./srcs/pma
 docker build --tag wp ./srcs/wordpress
 docker build --tag telegraf ./srcs/telegraf
 
-kubectl apply -f ./srcs/d_telegraf.yaml
-kubectl apply -f ./srcs/d_ftps.yaml
-kubectl apply -f ./srcs/d_grafana.yaml
 kubectl apply -f ./srcs/d_influxdb.yaml
+kubectl apply -f ./srcs/d_ftps.yaml
+kubectl apply -f ./srcs/d_telegraf.yaml
+kubectl apply -f ./srcs/d_wp.yaml
 kubectl apply -f ./srcs/d_metallb.yaml
 kubectl apply -f ./srcs/d_mysql.yaml
 kubectl apply -f ./srcs/d_nginx.yaml
 kubectl apply -f ./srcs/d_pma.yaml
-kubectl apply -f ./srcs/d_wp.yaml
+kubectl apply -f ./srcs/d_grafana.yaml
 

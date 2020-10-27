@@ -1,18 +1,16 @@
 apiVersion: v1
 kind: Service
 metadata:
-  annotations:
-    metallb.universe.tf/allow-shared-ip: shared
-  name: phpmyadmin-service
+  name: wordpress-service
   labels:
-    app: phpmyadmin-app
+    app: wordpress-app
 spec:
   selector:
-    app: phpmyadmin-app
+    app: wordpress-app
   ports:
-    - port: 5000
-      nodePort: 5000
-      targetPort: 5000
+    - port: 5050
+      nodePort: 5050
+      targetPort: 5050
       protocol: TCP
       name: http
   type: LoadBalancer
@@ -20,26 +18,26 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: phpmyadmin-deployment
+  name: wordpress-deployment
   labels:
-    app: phpmyadmin-app
+    app: wordpress-app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: phpmyadmin-app
+      app: wordpress-app
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
-        app: phpmyadmin-app
+        app: wordpress-app
     spec:
       restartPolicy: Always
       containers:
-      - image: pma
-        name: pma
+      - image: wp
+        name: wp
         ports:
-        - containerPort: 5000
-          name: pma
+        - containerPort: 5050
+          name: wp
         imagePullPolicy: Never
