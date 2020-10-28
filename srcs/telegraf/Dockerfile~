@@ -1,5 +1,0 @@
-FROM alpine
-RUN apk add bash
-EXPOSE 8125
-CMD tail -f /dev/null
-

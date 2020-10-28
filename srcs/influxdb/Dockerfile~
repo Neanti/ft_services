@@ -1,3 +1,0 @@
-FROM alpine
-RUN apk add bash
-CMD tail -f /dev/null
