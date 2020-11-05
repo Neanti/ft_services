@@ -1,5 +1,8 @@
-export MINIKUBE_HOME=~/goinfre
-minikube start --vm-driver=virtualbox --extra-config=apiserver.service-node-port-range=1-35000
+#export MINIKUBE_HOME=~/goinfre
+minikube start --vm-driver=docker --extra-config=apiserver.service-node-port-range=1-35000
+kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.4/manifests/namespace.yaml
+kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.4/manifests/metallb.yaml
+kubectl create secret generic -n metallb-system memberlist --from-literal=secretkey="$(openssl rand -base64 128)"
 minikube addons enable metrics-server && minikube addons enable metallb && minikube addons enable dashboard
 eval $(minikube docker-env)
 minikube dashboard &
