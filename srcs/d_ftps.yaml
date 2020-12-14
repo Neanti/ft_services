@@ -1,0 +1,86 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    metallb.universe.tf/allow-shared-ip: shared
+  name: ftps-service
+  labels:
+    app: ftps-app
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 21
+    nodePort: 21
+    targetPort: 21
+    protocol: TCP
+    name: ftps
+  - port: 30000
+    nodePort: 30000
+    targetPort: 30000
+    protocol: TCP
+    name: ftps-passiv1
+  - port: 30001
+    nodePort: 30001
+    targetPort: 30001
+    protocol: TCP
+    name: ftps-passiv2
+  - port: 30002
+    nodePort: 30002
+    targetPort: 30002
+    protocol: TCP
+    name: ftps-passiv3
+  - port: 30003
+    nodePort: 30003
+    targetPort: 30003
+    protocol: TCP
+    name: ftps-passiv4
+  - port: 30004
+    nodePort: 30004
+    targetPort: 30004
+    protocol: TCP
+    name: ftps-passiv5
+  - port: 30005
+    nodePort: 30005
+    targetPort: 30005
+    protocol: TCP
+    name: ftps-passiv6
+
+  selector:
+    app: ftps-app
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ftps-deployment
+spec:
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: ftps-app
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: ftps-app
+    spec:
+      restartPolicy: Always
+      containers:
+      - image: ftps
+        name: ftps
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 21
+          name: ftps
+        - containerPort: 30000
+          name: ftps-passiv1
+        - containerPort: 30001
+          name: ftps-passiv2
+        - containerPort: 30002
+          name: ftps-passiv3
+        - containerPort: 30003
+          name: ftps-passiv4
+        - containerPort: 30004
+          name: ftps-passiv5
+        - containerPort: 30005
+          name: ftps-passiv6
